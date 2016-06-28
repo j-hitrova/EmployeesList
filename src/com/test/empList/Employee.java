@@ -1,4 +1,4 @@
-package com.taras.empList;
+package com.test.empList;
 
 import java.io.Serializable;
 
