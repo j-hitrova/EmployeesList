@@ -7,6 +7,7 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
+        Scanner in = new Scanner(System.in);
 
         Employee employee = new Employee();
         ArrayList<Employee> employeeList;
@@ -25,7 +26,6 @@ public class Main {
         FileOutputStream fileOutputStream = new FileOutputStream(file);
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
 
-        Scanner in = new Scanner(System.in);
 
         System.out.print("First Name: ");
         employee.firstname = in.nextLine();
