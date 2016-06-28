@@ -24,10 +24,10 @@ public class Main {
         FileOutputStream fileOutputStream = new FileOutputStream(file);
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
 
-        employee.firstname = "Alexander";
-        employee.lastname = "Paul";
+        employee.firstname = "Vasya";
+        employee.lastname = "Petrov";
         employee.department = "IT";
-        employee.manager = "Viktor Krivoulets";
+        employee.manager = "Fedor Potemkin";
         employee.phone = "+71234567890";
 
         employeeList.add(employee);
