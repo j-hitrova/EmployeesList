@@ -26,6 +26,10 @@ public class Main {
 
         employee.firstname = "Alexander";
         employee.lastname = "Paul";
+        employee.department = "IT";
+        employee.manager = "Viktor Krivoulets";
+        employee.phone = "+71234567890";
+
         employeeList.add(employee);
 
         objectOutputStream.writeObject(employeeList);
