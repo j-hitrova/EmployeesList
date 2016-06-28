@@ -10,7 +10,7 @@ public class Main {
         Employee employee = new Employee();
         ArrayList<Employee> employeeList;
 
-        String filename = "empList.sav";
+        String filename = "out/empList.sav";
         File file = new File(filename);
         if (file.exists()) {
             FileInputStream fileInputStream = new FileInputStream(file);
