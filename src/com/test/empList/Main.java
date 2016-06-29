@@ -12,7 +12,7 @@ public class Main {
         Employee employee;
         ArrayList<Employee> employeeList;
         String filename = "out/empList.sav";
-        int recordNo;
+        int recordNo, yearOfBirth;
         String mode;
 
         employeeList = load(filename);
@@ -28,8 +28,10 @@ public class Main {
                     System.out.print("Last Name: ");
                     employee.lastname = in.nextLine();
 
-                    System.out.print("Year of birth: ");
-                    employee.yearOfBirth = Integer.parseInt(in.nextLine());
+                    do {
+                        System.out.print("Year of birth: ");
+                        yearOfBirth = Integer.parseInt(in.nextLine());
+                    } while (!employee.setYearOfBirth(yearOfBirth));
 
                     System.out.print("Department: ");
                     employee.department = in.nextLine();
