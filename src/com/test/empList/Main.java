@@ -4,6 +4,8 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Main {
 
@@ -13,7 +15,7 @@ public class Main {
         ArrayList<Employee> employeeList;
         String filename = "out/empList.sav";
         int recordNo, yearOfBirth;
-        String mode;
+        String mode, searchString;
 
         employeeList = load(filename);
         do {
@@ -31,7 +33,7 @@ public class Main {
                     do {
                         System.out.print("Year of birth: ");
                         yearOfBirth = Integer.parseInt(in.nextLine());
-                    } while (!employee.setYearOfBirth(yearOfBirth));
+                    } while (! employee.setYearOfBirth(yearOfBirth));
 
                     System.out.print("Department: ");
                     employee.department = in.nextLine();
@@ -83,6 +85,23 @@ public class Main {
 
                 case "quit":
                     System.out.println("Good bye!");
+                    break;
+
+                case "search":
+                    System.out.println("Enter name, lastname or phone number:");
+                    searchString = in.nextLine();
+
+                    for (int i=0; i<employeeList.size(); i++){
+                        if (employeeList.get(i).firstname.toUpperCase().matches(".*" + searchString.toUpperCase() + ".*")
+                                || employeeList.get(i).lastname.toUpperCase().matches(".*" + searchString.toUpperCase() + ".*")
+                                || employeeList.get(i).phone.matches(".*" + searchString + ".*")){
+                            System.out.println("Found at line: " + "EmpNo " + i + ". " + employeeList.get(i).firstname
+                                    + " " + employeeList.get(i).lastname +
+                                    " born in " + employeeList.get(i).yearOfBirth + " year, works in " +
+                                    employeeList.get(i).department + " under " + employeeList.get(i).manager +
+                                    " management and has phone number " + employeeList.get(i).phone);
+                        }
+                    }
                     break;
 
                 default:
