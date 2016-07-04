@@ -1,5 +1,3 @@
-package com.test.empList;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -13,7 +11,7 @@ public class Main {
         Scanner in = new Scanner(System.in);
         Employee employee;
         ArrayList<Employee> employeeList;
-        String filename = "out/empList.sav";
+        String filename = "target/empList.sav";
         int recordNo, yearOfBirth;
         String mode, searchString;
 
