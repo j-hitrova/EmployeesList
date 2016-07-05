@@ -60,4 +60,9 @@ public class Employee implements Serializable {
             return false;
         }
     }
+
+    public String toString(){
+        return this.getFirstname() + " " + this.getLastname() + " " + this.getYearOfBirth() + " "
+                + this.getPhone() + " " + this.getDepartment() + " " + this.getManager();
+    }
 }

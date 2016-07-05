@@ -1,3 +1,4 @@
+import javax.xml.transform.TransformerException;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -7,17 +8,22 @@ import java.util.regex.Pattern;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
+    public static void main(String[] args) throws IOException, ClassNotFoundException, TransformerException {
         Scanner in = new Scanner(System.in);
         Employee employee;
-        ArrayList<Employee> employeeList;
-        String filename = "target/empList.sav";
+        ArrayList<Employee> employeeList = new ArrayList<>();
+        String filename = "target/empList.csv";
         int recordNo, yearOfBirth;
         String mode, searchString;
 
-        employeeList = load(filename);
+        File file = new File(filename);
+        if (file.exists()) {
+            employeeList = CsvFileReader.readCsvFile(filename);
+        } else {
+            file.createNewFile();
+        }
         do {
-            System.out.println("\nSelect mode (add/delete/list/save/load/save as/load from/quit): ");
+            System.out.println("\nSelect operation (add/delete/list/search/save as/load from/quit): ");
             switch (mode = in.nextLine()) {
                 case "add":
                     employee = new Employee();
@@ -31,7 +37,7 @@ public class Main {
                     do {
                         System.out.print("Year of birth: ");
                         yearOfBirth = Integer.parseInt(in.nextLine());
-                    } while (! employee.setYearOfBirth(yearOfBirth));
+                    } while (!employee.setYearOfBirth(yearOfBirth));
 
                     System.out.print("Department: ");
                     employee.department = in.nextLine();
@@ -52,33 +58,22 @@ public class Main {
                     break;
 
                 case "list":
-                    for (int i = 0; i < employeeList.size(); i++) {
-                        System.out.println("EmpNo " + i + ". " + employeeList.get(i).firstname + " " + employeeList.get(i).lastname +
-                                " born in " + employeeList.get(i).yearOfBirth + " year, works in " +
-                                employeeList.get(i).department + " under " + employeeList.get(i).manager +
-                                " management and has phone number " + employeeList.get(i).phone
-                        );
+                    for (int i = 0; i < employeeList.size(); i++){
+                        Employee emp = employeeList.get(i);
+                        System.out.println(i + ". " + emp.toString());
                     }
-                    break;
-
-                case "save":
-                    save(employeeList, filename);
-                    break;
-
-                case "load":
-                    employeeList = load(filename);
                     break;
 
                 case "save as":
                     System.out.println("Enter filename: ");
                     filename = in.nextLine();
-                    save(employeeList, filename);
+                    CsvFileWriter.writeCsvFile(employeeList, filename);
                     break;
 
                 case "load from":
                     System.out.println("Enter filename: ");
                     filename = in.nextLine();
-                    employeeList = load(filename);
+                    employeeList = CsvFileReader.readCsvFile(filename);
                     break;
 
                 case "quit":
@@ -89,15 +84,12 @@ public class Main {
                     System.out.println("Enter name, lastname or phone number:");
                     searchString = in.nextLine();
 
-                    for (int i=0; i<employeeList.size(); i++){
-                        if (employeeList.get(i).firstname.toUpperCase().matches(".*" + searchString.toUpperCase() + ".*")
-                                || employeeList.get(i).lastname.toUpperCase().matches(".*" + searchString.toUpperCase() + ".*")
-                                || employeeList.get(i).phone.matches(".*" + searchString + ".*")){
-                            System.out.println("Found at line: " + "EmpNo " + i + ". " + employeeList.get(i).firstname
-                                    + " " + employeeList.get(i).lastname +
-                                    " born in " + employeeList.get(i).yearOfBirth + " year, works in " +
-                                    employeeList.get(i).department + " under " + employeeList.get(i).manager +
-                                    " management and has phone number " + employeeList.get(i).phone);
+                    for (int i = 0; i < employeeList.size(); i++) {
+                        Employee emp = employeeList.get(i);
+                        if (emp.firstname.toUpperCase().matches(".*" + searchString.toUpperCase() + ".*")
+                                || emp.lastname.toUpperCase().matches(".*" + searchString.toUpperCase() + ".*")
+                                || emp.phone.matches(".*" + searchString + ".*")) {
+                            System.out.println(i + ". " + emp.toString());
                         }
                     }
                     break;
@@ -107,26 +99,6 @@ public class Main {
             }
         } while (!Objects.equals(mode, "quit"));
 
-        save(employeeList, filename);
-    }
-
-    public static ArrayList<Employee> load(String filename) throws IOException, ClassNotFoundException {
-        File file = new File(filename);
-        ArrayList<Employee> employeeList = new ArrayList<>();
-        if (file.exists()) {
-            FileInputStream fileInputStream = new FileInputStream(file);
-            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-            employeeList = (ArrayList<Employee>) objectInputStream.readObject();
-            fileInputStream.close();
-        }
-        return employeeList;
-    }
-
-    public static void save(ArrayList<Employee> employeeList, String filename) throws IOException {
-        File file = new File(filename);
-        FileOutputStream fileOutputStream = new FileOutputStream(file);
-        ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-        objectOutputStream.writeObject(employeeList);
-        fileOutputStream.close();
+        CsvFileWriter.writeCsvFile(employeeList, filename);
     }
 }
