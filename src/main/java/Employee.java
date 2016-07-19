@@ -1,4 +1,4 @@
-
+package com.test.empList;
 
 import java.io.Serializable;
 import java.util.Calendar;
@@ -27,9 +27,6 @@ public class Employee implements Serializable {
         return phone;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
 
     public String getDepartment() {
         return department;
@@ -57,6 +54,17 @@ public class Employee implements Serializable {
             this.yearOfBirth = yearOfBirth;
             return true;
         } else {
+            return false;
+        }
+    }
+
+    public boolean setPhone (String phone) {
+        if (phone.matches("^\\+\\d{1,2}\\s+\\d{3}\\s+\\d{3}\\s+\\d{2}\\s+\\d{2}$"))
+        {
+            this.phone = phone;
+            return true;
+        } else {
+            System.out.println("Try again!");
             return false;
         }
     }
