@@ -45,8 +45,9 @@ public class Main {
                     System.out.print("Manager: ");
                     employee.manager = in.nextLine();
 
-                    System.out.print("Phone number: ");
-                    employee.phone = in.nextLine();
+                    do {
+                        System.out.print("Phone number (+1 234 567 89 10): ");
+                    } while (! employee.setPhone(in.nextLine()));
 
                     employeeList.add(employee);
                     break;

@@ -9,7 +9,7 @@ public class CsvFileWriter {
     private static final String NEW_LINE_SEPARATOR = "\n";
 
     //CSV file header
-    private static final String FILE_HEADER = "id,firstName,lastName,yearOfBirth,phone,department,manager";
+    private static final String FILE_HEADER = "firstName,lastName,yearOfBirth,phone,department,manager";
     public static void writeCsvFile(ArrayList<Employee> employeeList, String fileName) {
         FileWriter fileWriter = null;
         try {
