@@ -31,7 +31,7 @@ public class CsvFileReader {
                     Employee employee = new Employee();
                     employee.setFirstname(tokens[0]);
                     employee.setLastname(tokens[1]);
-                    employee.setYearOfBirth(Integer.parseInt(tokens[2]));
+                    employee.setYearOfBirth(tokens[2]);
                     employee.setPhone(tokens[3]);
                     employee.setDepartment(tokens[4]);
                     employee.setManager(tokens[5]);

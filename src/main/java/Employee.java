@@ -1,6 +1,7 @@
 
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.regex.Pattern;
 
 public class Employee implements Serializable {
     String firstname, lastname, phone, department, manager;
@@ -47,12 +48,22 @@ public class Employee implements Serializable {
         return yearOfBirth;
     }
 
-    public boolean setYearOfBirth(Integer yearOfBirth) {
+    public boolean setYearOfBirth(String strYearOfBirth) {
         int currentYear = Calendar.getInstance().get(Calendar.YEAR);
-        if (yearOfBirth > 1900 && yearOfBirth < currentYear) {
+        int yearOfBirth;
+
+        if (! strYearOfBirth.isEmpty() && Pattern.matches("\\d{4}", strYearOfBirth)){
+            yearOfBirth = Integer.parseInt(strYearOfBirth);
+        } else {
+            System.err.println("Four digits are expected! Try again");
+            return false;
+        }
+
+        if (yearOfBirth > (currentYear - 100) && yearOfBirth < (currentYear - 16)) {
             this.yearOfBirth = yearOfBirth;
             return true;
         } else {
+            System.err.println("Age should not be more than 100 year or less than 16. Try again");
             return false;
         }
     }
@@ -63,7 +74,7 @@ public class Employee implements Serializable {
             this.phone = phone;
             return true;
         } else {
-            System.out.println("Try again!");
+            System.err.println("Try again!");
             return false;
         }
     }

@@ -13,8 +13,8 @@ public class Main {
         Employee employee;
         ArrayList<Employee> employeeList = new ArrayList<>();
         String filename = "target/empList.csv";
-        int recordNo, yearOfBirth;
-        String mode, searchString;
+        int recordNo;
+        String mode, searchString, yearOfBirth;
 
         File file = new File(filename);
         if (file.exists()) {
@@ -28,32 +28,32 @@ public class Main {
                 case "add":
                     employee = new Employee();
 
-                    System.out.print("First Name: ");
+                    System.out.println("First Name: ");
                     employee.firstname = in.nextLine();
 
-                    System.out.print("Last Name: ");
+                    System.out.println("Last Name: ");
                     employee.lastname = in.nextLine();
 
                     do {
-                        System.out.print("Year of birth: ");
-                        yearOfBirth = Integer.parseInt(in.nextLine());
+                        System.out.println("Year of birth: ");
+                        yearOfBirth = in.nextLine();
                     } while (!employee.setYearOfBirth(yearOfBirth));
 
-                    System.out.print("Department: ");
+                    System.out.println("Department: ");
                     employee.department = in.nextLine();
 
-                    System.out.print("Manager: ");
+                    System.out.println("Manager: ");
                     employee.manager = in.nextLine();
 
                     do {
-                        System.out.print("Phone number (+1 234 567 89 10): ");
+                        System.out.println("Phone number (+1 234 567 89 10): ");
                     } while (! employee.setPhone(in.nextLine()));
 
                     employeeList.add(employee);
                     break;
 
                 case "delete":
-                    System.out.print("Enter record number to delete: ");
+                    System.out.println("Enter record number to delete: ");
                     recordNo = Integer.parseInt(in.nextLine());
                     employeeList.remove(recordNo);
                     break;
@@ -96,7 +96,7 @@ public class Main {
                     break;
 
                 default:
-                    System.out.println("Incorrect mode selected");
+                    System.err.println("Incorrect mode selected");
             }
         } while (!Objects.equals(mode, "quit"));
 
